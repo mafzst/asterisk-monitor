@@ -4,7 +4,7 @@
   "description": "A modern Asterisk monitor",
   "main": "main.js",
   "scripts": {
-    "start": "cd public && npm run build && cd - && node main.js",
+    "start": "cd public && NODE_ENV=development npm i && npm run build && cd - && node main.js",
     "test": "echo 'Are you expecting something here bro?'"
   },
   "repository": {
