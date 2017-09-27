@@ -1,0 +1,3 @@
+[submodule "public"]
+	path = public
+	url = git@git.ownweb.fr:nicolas/asterisk-vue-monitor.git
