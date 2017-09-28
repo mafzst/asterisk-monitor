@@ -54,6 +54,10 @@ const Asterisk = {
     if (data.actionid && (request = requestsStack[data.actionid]) !== undefined) {
       let response
 
+      if (request.watchdog === undefined) {
+        requestsStack[data.actionid].watchdog = preventTimeout(request)
+      }
+
       switch (request.action) {
         case 'ping':
           response = {
@@ -61,10 +65,6 @@ const Asterisk = {
           }
           break
         case 'sippeers':
-          if (request.watchdog === undefined) {
-            requestsStack[data.actionid].watchdog = preventTimeout(request)
-          }
-
           if (!this.handlePeersList(data).isFinished)
             return
           clearTimeout(request.watchdog)
@@ -98,7 +98,7 @@ const Asterisk = {
         }, {})
       )
     return {
-      isFinished: response.eventlist === 'Complete',
+      isFinished: false // response.eventlist === 'Complete',
     }
   }
 }
