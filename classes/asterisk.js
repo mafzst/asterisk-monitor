@@ -49,6 +49,10 @@ const Asterisk = {
       this.state.loggedIn = true
       return
     }
+    if(data.event && data.event == 'Shutdown') {
+      this.state.loggedIn = false
+      return
+    }
     if (data.event === 'FullyBooted' || data.message === 'Authentication accepted')
       return
     if (data.actionid && (request = requestsStack[data.actionid]) !== undefined) {
