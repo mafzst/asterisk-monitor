@@ -102,7 +102,7 @@ const Asterisk = {
         }, {})
       )
     return {
-      isFinished: false // response.eventlist === 'Complete',
+      isFinished: response.eventlist === 'Complete',
     }
   }
 }
