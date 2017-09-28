@@ -8,7 +8,7 @@ const basicCommand = (req, res) => {
   // res.json({
   //   status: 'ok'
   // })
-  Asterisk.sendRequest(command, (response, status) => res.status(status || 200).json(response))
+  Asterisk.sendRequest(command, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
 }
 
 const router = require('express').Router()
