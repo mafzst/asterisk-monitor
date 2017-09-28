@@ -18,6 +18,8 @@ const preventTimeout = request => setTimeout(() => {
   },
   3000)
 
+const generateActionId = () => Math.floor(Math.random() * 100000000000000000)
+
 const Asterisk = {
   // Used outside
   init(config) {
@@ -26,13 +28,25 @@ const Asterisk = {
     ami.connect()
   },
   sendRequest(action, callback) {
-    const ActionId = Math.floor(Math.random() * 100000000000000000)
+    const ActionId = generateActionId()
     requestsStack[ActionId] = {
       action,
       callback
     }
     ami.send({
       action,
+      ActionId
+    })
+  },
+  postRequest(action, params, callback) {
+    const ActionId = generateActionId()
+    requestsStack[ActionId] = {
+      action,
+      callback
+    }
+    ami.send({
+      action,
+      ...params,
       ActionId
     })
   },
@@ -49,7 +63,7 @@ const Asterisk = {
       this.state.loggedIn = true
       return
     }
-    if(data.event && data.event == 'Shutdown') {
+    if (data.event && data.event == 'Shutdown') {
       this.state.loggedIn = false
       return
     }
@@ -71,13 +85,13 @@ const Asterisk = {
         case 'sippeers':
           if (!this.handlePeersList(data).isFinished)
             return
-          clearTimeout(request.watchdog)
           response = this.state.peers
           break
         default:
           console.log('AMI DATA', data);
       }
 
+      clearTimeout(request.watchdog)
       request.callback({
         status: data.response || 'Success',
         actionId: data.actionid,
@@ -86,7 +100,7 @@ const Asterisk = {
       })
       delete requestsStack[data.actionid]
     } else {
-      console.log('AMI DATA', data);
+      console.log('AMI DATA', data)
     }
   },
   handlePeersList(response) {

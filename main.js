@@ -1,7 +1,11 @@
 const express = require('express')
 const app = express()
 
+const bodyParser = require('body-parser')
+
 const AsteriskV1Router = require('./routers/asterisk/v1')
+
+app.use(bodyParser.json())
 
 /* Serve VueJs app (in public/dist) on the default route */
 app.use(express.static(__dirname + '/public/dist'))

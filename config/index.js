@@ -5,5 +5,5 @@ module.exports = {
     username: process.env.ASTERISK_USERNAME || 'hello',
     password: process.env.ASTERISK_PASSWORD || 'world'
   },
-  amiEndpoints: ['ping', 'sippeers']
+  amiEndpoints: ['ping', 'sippeers', 'originate', 'queues']
 }

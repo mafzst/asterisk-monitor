@@ -5,15 +5,19 @@ Asterisk.init(config.asterisk)
 
 const basicCommand = (req, res) => {
   const command = req.params.command
-  // res.json({
-  //   status: 'ok'
-  // })
   Asterisk.sendRequest(command, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
 }
 
+const postCommand = (req, res) => {
+  const command = req.params.command
+  const params = req.body
+  Asterisk.postRequest(command, params, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
+}
+
+const options = (req, res) => res.set({'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Allow-Origin': '*'}).status(200).end()
+
 const router = require('express').Router()
 const TAG = 'Asterisk V1'
-
 
 const filterEndpoints = (req, res, next) => {
   if (req.params.command && config.amiEndpoints.indexOf(req.params.command) < 0) {
@@ -31,5 +35,7 @@ router.use((req, res, next) => {
   next()
 })
 router.get('/:command', filterEndpoints, basicCommand)
+router.post('/:command', filterEndpoints, postCommand)
+router.options('/:command', filterEndpoints, options)
 
 module.exports = router
