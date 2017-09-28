@@ -14,6 +14,7 @@
   "author": "Nicolas Perraut <n.perraut@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "asterisk-ami": "^0.2.0-beta",
     "express": "^4.15.5"
   }
 }
