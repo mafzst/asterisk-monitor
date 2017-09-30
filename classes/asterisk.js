@@ -44,11 +44,16 @@ const Asterisk = {
       action,
       callback
     }
-    ami.send({
+    let payload = {
       action,
-      ...params,
       ActionId
+    }
+
+    Object.keys(params).forEach(param => {
+      payload[param] = params[param]
     })
+
+    ami.send(payload)
   },
   addSocketClient(client) {
     this.state.clients.push(client)
