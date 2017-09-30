@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
-require('express-ws')(app)
 
 const config = require('./config/index')
 const Asterisk = require('./classes/asterisk')
