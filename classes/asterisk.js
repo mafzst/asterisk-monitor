@@ -50,14 +50,27 @@ const Asterisk = {
       ActionId
     })
   },
+  addSocketClient(client) {
+    this.state.clients.push(client)
+    client.emit('message', JSON.stringify({
+      status: 'Welcome'
+    }))
+  },
+
+  // State
   state: {
     loggedIn: false,
     peers: [],
-    tempStatus: null
+    tempStatus: null,
+    clients: []
   },
 
   // Used only internally
   amiCallback(data) {
+    if (data.event) {
+      this.state.clients.forEach(client => client.emit(data.event, data))
+    }
+
     let request
     if (data.event && data.event === 'SuccessfulAuth') {
       this.state.loggedIn = true

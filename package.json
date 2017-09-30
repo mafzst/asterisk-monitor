@@ -16,6 +16,7 @@
   "dependencies": {
     "asterisk-ami": "^0.2.0-beta",
     "body-parser": "^1.18.2",
-    "express": "^4.15.5"
+    "express": "^4.15.5",
+    "socket.io": "^2.0.3"
   }
 }

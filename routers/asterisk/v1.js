@@ -1,17 +1,14 @@
 const config = require('../../config/index')
-const Asterisk = require('../../classes/asterisk')
-
-Asterisk.init(config.asterisk)
 
 const basicCommand = (req, res) => {
   const command = req.params.command
-  Asterisk.sendRequest(command, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
+  res.locals.Asterisk.sendRequest(command, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
 }
 
 const postCommand = (req, res) => {
   const command = req.params.command
   const params = req.body
-  Asterisk.postRequest(command, params, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
+  res.locals.Asterisk.postRequest(command, params, (response, status) => res.set({'Access-Control-Allow-Origin': '*'}).status(status || 200).json(response))
 }
 
 const options = (req, res) => res.set({'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Allow-Origin': '*'}).status(200).end()
